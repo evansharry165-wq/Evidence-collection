@@ -6,7 +6,9 @@ This is the Ogimet replacement — same data, official US-government source, no 
 
 import json, time
 from pull_common import http_get, wrap, utc_now_iso
-from manifest_source_of_truth import DEFAULT_AIRPORTS
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).parent.parent))
+from airports import ICAO_LIST
 
 ID = "aviationweather-metar-taf"
 ENDPOINT = "https://aviationweather.gov/api/data"
@@ -14,7 +16,7 @@ AUTH_MODE = "none"
 
 
 def pull() -> dict:
-    airports = ",".join(DEFAULT_AIRPORTS)
+    airports = ",".join(ICAO_LIST)
     t0 = time.time()
 
     metar_url = f"{ENDPOINT}/metar?ids={airports}&format=json&hours=6"
@@ -27,7 +29,7 @@ def pull() -> dict:
     taf = json.loads(taf_raw) if taf_raw.strip() else []
 
     data = {
-        "airports_requested": DEFAULT_AIRPORTS,
+        "airports_requested": ICAO_LIST,
         "metar": metar,
         "taf": taf,
     }
