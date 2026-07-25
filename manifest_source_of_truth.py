@@ -1,0 +1,107 @@
+"""Manifest source-of-truth — driven from Python, applied to data/manifest.xlsx on every run.
+
+Do NOT edit manifest.xlsx by hand. Update this file, then the nightly cron rewrites the workbook.
+This keeps the workbook and code in lock-step.
+"""
+
+SOURCES = [
+    {
+        "id": "aviationweather-metar-taf",
+        "category": "Weather",
+        "provider": "NOAA AviationWeather.gov",
+        "endpoint": "https://aviationweather.gov/api/data/metar",
+        "cadence": "daily 03:00",
+        "auth": "none",
+        "cost": "free",
+        "layer": "L1",
+        "notes": "METAR + TAF for named-airport list — Ogimet replacement",
+    },
+    {
+        "id": "opensky-flight-tracks",
+        "category": "Flight tracks",
+        "provider": "OpenSky Network",
+        "endpoint": "https://opensky-network.org/api",
+        "cadence": "daily 03:00",
+        "auth": "none (anon-limited)",
+        "cost": "free",
+        "layer": "L1",
+        "notes": "ADS-B flight tracks — TOPS replacement for basic coverage",
+    },
+    {
+        "id": "nasa-firms-wildfires",
+        "category": "Natural disaster",
+        "provider": "NASA FIRMS",
+        "endpoint": "https://firms.modaps.eosdis.nasa.gov/api",
+        "cadence": "daily 03:00",
+        "auth": "MAP_KEY",
+        "cost": "free",
+        "layer": "L1",
+        "notes": "Active wildfire hotspots — natural-disaster evidence",
+    },
+    {
+        "id": "copernicus-effis",
+        "category": "Natural disaster",
+        "provider": "Copernicus EFFIS",
+        "endpoint": "https://effis.jrc.ec.europa.eu",
+        "cadence": "daily 03:00",
+        "auth": "none",
+        "cost": "free",
+        "layer": "L1",
+        "notes": "EU forest-fire snapshots — natural-disaster evidence",
+    },
+    {
+        "id": "dgac-france-notices",
+        "category": "Industrial action",
+        "provider": "DGAC France",
+        "endpoint": "https://www.ecologie.gouv.fr",
+        "cadence": "daily 03:00",
+        "auth": "none (scrape)",
+        "cost": "free",
+        "layer": "L1",
+        "notes": "French ATC industrial-action notices — third-party IA evidence",
+    },
+    {
+        "id": "enac-italy-notices",
+        "category": "Industrial action",
+        "provider": "ENAC Italy",
+        "endpoint": "https://www.enac.gov.it",
+        "cadence": "daily 03:00",
+        "auth": "none (scrape)",
+        "cost": "free",
+        "layer": "L1",
+        "notes": "Italian aviation industrial-action notices — third-party IA evidence",
+    },
+    {
+        "id": "eurocontrol-nm-public",
+        "category": "ATFM",
+        "provider": "Eurocontrol NM",
+        "endpoint": "https://www.public.nm.eurocontrol.int",
+        "cadence": "daily 03:00",
+        "auth": "none",
+        "cost": "free",
+        "layer": "L1",
+        "notes": "Public NM regulations feed — ATFM cascade evidence",
+    },
+    {
+        "id": "vaac-london-qva",
+        "category": "Volcanic ash",
+        "provider": "Met Office VAAC London",
+        "endpoint": "QVA@metoffice.gov.uk",
+        "cadence": "daily 03:00",
+        "auth": "written request",
+        "cost": "free",
+        "layer": "L1",
+        "notes": "QVA quantitative volcanic-ash feed — McDonagh-style evidence",
+    },
+]
+
+# Airport list for weather + tracks. Extend as needed.
+DEFAULT_AIRPORTS = [
+    "EGLL", "EGKK", "EGGW", "EGSS", "EGCC", "EGPH", "EGGD",  # UK
+    "LFPG", "LFPO", "LFMN",                                    # France
+    "EHAM",                                                    # Netherlands
+    "EDDF", "EDDM", "EDDL",                                    # Germany
+    "LEBL", "LEMD", "LEPA",                                    # Spain
+    "LIMC", "LIRF",                                            # Italy
+    "LSZH", "LSGG",                                            # Switzerland
+]
