@@ -1,0 +1,16 @@
+run_utc,source_id,status,rows,bytes,error
+2026-07-25T20:04:06Z,aviationweather-metar-taf,failed,0,0,URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-07-25T20:04:06Z,opensky-flight-tracks,failed,0,0,URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-07-25T20:04:06Z,nasa-firms-wildfires,failed,0,0,RuntimeError: FIRMS_MAP_KEY env var missing — register free key at https://firms.modaps.eosdis.nasa.gov/api/map_key/ and add to GitHub Actions secrets.
+2026-07-25T20:04:06Z,copernicus-effis,failed,0,0,URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-07-25T20:04:06Z,dgac-france-notices,failed,0,0,URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-07-25T20:04:06Z,enac-italy-notices,failed,0,0,URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-07-25T20:04:06Z,eurocontrol-nm-public,failed,0,0,URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-07-25T20:04:06Z,faa-notams,failed,0,0,RuntimeError: FAA_CLIENT_ID / FAA_CLIENT_SECRET env vars missing — register free at https://api.faa.gov/s/ and add as GitHub Actions secrets.
+2026-07-25T20:04:06Z,aviation-herald-news,failed,0,0,URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-07-25T20:04:06Z,simple-flying-news,failed,0,0,URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-07-25T20:04:06Z,gdacs-global-disasters,failed,0,0,URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-07-25T20:04:06Z,smithsonian-volcanoes,failed,0,0,URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+2026-07-25T20:04:06Z,met-office-charts,live,0,1144,
+2026-07-25T20:04:06Z,eurocontrol-coda,live,0,476,
+2026-07-25T20:04:06Z,vaac-london-qva,failed,0,0,RuntimeError: VAAC QVA access not yet onboarded — email QVA@metoffice.gov.uk with the subscription template in this file's docstring. Free but access-gated.

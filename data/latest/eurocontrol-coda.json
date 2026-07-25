@@ -1,0 +1,16 @@
+{
+  "source_id": "eurocontrol-coda",
+  "pulled_at": "2026-07-25T20:04:06Z",
+  "rows": 0,
+  "data": {
+    "endpoint": "https://www.eurocontrol.int/publications",
+    "note": "Retrospective delay analysis — companion to live NM feed. UI links out; PDFs not stored inline.",
+    "publications": []
+  },
+  "provenance": {
+    "endpoint": "https://www.eurocontrol.int/publications",
+    "auth_mode": "none",
+    "fetch_duration_seconds": 0.0,
+    "runner": "github-actions"
+  }
+}

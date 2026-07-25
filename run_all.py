@@ -22,6 +22,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 sys.path.insert(0, str(pathlib.Path(__file__).parent / "sources"))
 from pull_common import write_snapshot
 from manifest_source_of_truth import SOURCES
+from retention import rollup as retention_rollup
 
 ROOT = pathlib.Path(__file__).parent
 MANIFEST = ROOT / "data" / "manifest.xlsx"
@@ -106,6 +107,13 @@ def main() -> int:
     results = [run_one(s) for s in SOURCES]
     update_manifest(results)
     append_log(results)
+    # Retention pass — archive >90d snapshots into monthly rollups + delete originals
+    try:
+        rstats = retention_rollup(ROOT / "data")
+        if rstats["archived_files"]:
+            print(f"Retention: archived {rstats['archived_files']} files ({rstats['archived_bytes']:,} bytes) into rollup/")
+    except Exception as e:
+        print(f"Retention pass failed: {e}", file=sys.stderr)
     failed = [r for r in results if r["status"] == "failed"]
     live = [r for r in results if r["status"] == "live"]
     planned = [r for r in results if r["status"] == "planned"]

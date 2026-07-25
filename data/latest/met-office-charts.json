@@ -1,0 +1,33 @@
+{
+  "source_id": "met-office-charts",
+  "pulled_at": "2026-07-25T20:04:06Z",
+  "rows": 0,
+  "data": {
+    "endpoint": "https://www.metoffice.gov.uk/services/transport/aviation/regulated/general-aviation",
+    "note": "Chart image URLs — UI lazy-loads direct from Met Office. Not stored inline.",
+    "charts": [],
+    "fallback_pages": [
+      {
+        "category": "MSLP analysis",
+        "url": "https://www.metoffice.gov.uk/weather/maps-and-charts/surface-pressure",
+        "note": "Live MSLP chart page"
+      },
+      {
+        "category": "Aviation sig-wx",
+        "url": "https://www.metoffice.gov.uk/services/transport/aviation/regulated/ga-briefing",
+        "note": "GA briefing hub"
+      },
+      {
+        "category": "Volcanic ash advisory",
+        "url": "https://www.metoffice.gov.uk/services/transport/aviation/regulated/vaac",
+        "note": "London VAAC page"
+      }
+    ]
+  },
+  "provenance": {
+    "endpoint": "https://www.metoffice.gov.uk/services/transport/aviation/regulated/general-aviation",
+    "auth_mode": "none (public charts index)",
+    "fetch_duration_seconds": 0.0,
+    "runner": "github-actions"
+  }
+}
