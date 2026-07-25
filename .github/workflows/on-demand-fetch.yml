@@ -1,0 +1,95 @@
+name: On-demand case fetch
+
+on:
+  workflow_dispatch:
+    inputs:
+      case_ref:
+        description: 'Case reference (e.g. DEF-2026-EW-0089)'
+        required: true
+        type: string
+      date_iso:
+        description: 'Case flight date, ISO YYYY-MM-DD'
+        required: true
+        type: string
+      airports:
+        description: 'Comma-separated ICAO codes (e.g. EGLL,EIDW)'
+        required: true
+        type: string
+      flight_num:
+        description: 'Flight number (e.g. EZY7253)'
+        required: false
+        type: string
+      reg:
+        description: 'Aircraft registration (e.g. OE-LDC)'
+        required: false
+        type: string
+      sources:
+        description: 'Comma-separated source IDs; blank = all applicable'
+        required: false
+        type: string
+      window_hours_before:
+        description: 'Backfill window before flight time (hours)'
+        required: false
+        type: string
+        default: '12'
+      window_hours_after:
+        description: 'Forward window after flight time (hours)'
+        required: false
+        type: string
+        default: '6'
+
+concurrency:
+  group: on-demand-fetch-${{ inputs.case_ref }}
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install openpyxl
+
+      - name: Run on-demand fetch
+        env:
+          GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python on_demand/run_fetch.py \
+            --case-ref "${{ inputs.case_ref }}" \
+            --date-iso "${{ inputs.date_iso }}" \
+            --airports "${{ inputs.airports }}" \
+            --flight-num "${{ inputs.flight_num }}" \
+            --reg "${{ inputs.reg }}" \
+            --sources "${{ inputs.sources }}" \
+            --window-hours-before "${{ inputs.window_hours_before }}" \
+            --window-hours-after "${{ inputs.window_hours_after }}" \
+            --triggered-by "${{ github.actor }}"
+
+      - name: Commit case-fetch results
+        if: always()
+        run: |
+          git config user.name "evidence-collection[bot]"
+          git config user.email "harryevans15@icloud.com"
+          git add -A data/case-fetches/
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "On-demand fetch · ${{ inputs.case_ref }} · $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
