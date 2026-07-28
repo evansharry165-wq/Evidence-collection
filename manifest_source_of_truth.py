@@ -160,6 +160,17 @@ SOURCES = [
         "notes": "Central Office for Delay Analysis publications — retrospective ATFM delay stats. Companion to live NM feed.",
     },
     {
+        "id": "autorouter-notams",
+        "category": "NOTAMs",
+        "provider": "AutoRouter",
+        "endpoint": "https://api.autorouter.aero/v1.0/notam",
+        "cadence": "daily 03:00",
+        "auth": "HTTP Basic (AUTOROUTER_USER + AUTOROUTER_PASS)",
+        "cost": "free (register)",
+        "layer": "L1b",
+        "notes": "Better European coverage than FAA NOTAM (US-biased, current-only). Free tier. Historical query = follow-up on-demand.",
+    },
+    {
         "id": "vaac-london-qva",
         "category": "Volcanic ash",
         "provider": "Met Office VAAC London",
